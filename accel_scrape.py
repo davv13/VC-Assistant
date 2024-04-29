@@ -23,14 +23,17 @@ try:
 
     load_more_button = driver.find_element(By.CLASS_NAME, 'load-more-button')
     load_more_button.click()
-    time.sleep(15)  # Wait for the content to load after clicking
+    time.sleep(15)
 
     items = driver.find_elements(By.CSS_SELECTOR, "div.full-list---new.w-dyn-items > div.w-dyn-item")
     companies_data = []
     
     for item in items:
-        company_name_element = item.find_element(By.CSS_SELECTOR, "div.bold.w-condition-invisible")
-        company_name = company_name_element.text
+        company_name_script = """
+            var companyNameDiv = arguments[0].querySelector('div.relationships-table---company-name div');
+            return companyNameDiv ? companyNameDiv.textContent.trim() : "Not Found";
+            """
+        company_name = driver.execute_script(company_name_script, item)
 
         investment_round_element = item.find_element(By.CSS_SELECTOR, "div.text-block-2")
         investment_round = investment_round_element.text if investment_round_element else "Not Found"
@@ -62,7 +65,6 @@ try:
         }
         companies_data.append(company_data)
 
-    # Printing the scraped data
     for company in companies_data:
         print(company)
 
