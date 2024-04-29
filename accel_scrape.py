@@ -6,10 +6,14 @@ from selenium.webdriver.chrome.options import Options
 import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import os
 
+data_directory = 'data'
+if not os.path.exists(data_directory):
+    os.makedirs(data_directory)
 
 chrome_options = Options()
-# chrome_options.add_argument("--headless")
+chrome_options.add_argument("--headless")
 chrome_options.add_argument('--ignore-certificate-errors') 
 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
@@ -65,8 +69,14 @@ try:
         }
         companies_data.append(company_data)
 
-    for company in companies_data:
-        print(company)
+    markdown_file = os.path.join(data_directory, 'accel.md')
+    with open(markdown_file, 'w', encoding='utf-8') as file:
+        for company in companies_data:
+            file.write(f"Company Name: {company['company_name']}\n")
+            file.write(f"Investment Info: {company['investment_info']}\n")
+            file.write(f"Founders: {company['founders_info']}\n")
+            file.write(f"Description: {company['short_description']}\n\n")
+
 
 except Exception as e:
     print(f"Error: {e}")
