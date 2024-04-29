@@ -34,7 +34,8 @@ try:
 
         investment_info = item.find_element(By.CSS_SELECTOR, "div.text-block-2").text
         try:
-            founders_info = item.find_element(By.CSS_SELECTOR, "div.relationships---founders.w-richtext p").text
+            founders_info_elements = item.find_elements(By.CSS_SELECTOR, "div.relationships---founders.w-richtext p")
+            founders_info = ", ".join([founder.text for founder in founders_info_elements if founder.text])
         except:
             founders_info = "Not Found"
         try:
