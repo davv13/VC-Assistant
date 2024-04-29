@@ -10,7 +10,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 chrome_options = Options()
 # chrome_options.add_argument("--headless")
-chrome_options.add_argument('--ignore-certificate-errors')  # Ignoring certificate errors
+chrome_options.add_argument('--ignore-certificate-errors') 
 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 url = 'https://www.accel.com/relationships'
@@ -32,7 +32,18 @@ try:
         company_name_element = item.find_element(By.CSS_SELECTOR, "div.bold.w-condition-invisible")
         company_name = company_name_element.text
 
-        investment_info = item.find_element(By.CSS_SELECTOR, "div.text-block-2").text
+        investment_round_element = item.find_element(By.CSS_SELECTOR, "div.text-block-2")
+        investment_round = investment_round_element.text if investment_round_element else "Not Found"
+        
+        investment_year = ""
+        try:
+            investment_year_element = investment_round_element.find_element(By.XPATH, "following-sibling::div")
+            investment_year = investment_year_element.text if investment_year_element else ""
+        except Exception as e:
+            print(f"Could not find investment year due to: {e}")
+        
+        investment_info = f"{investment_round} {investment_year}".strip()
+        
         try:
             founders_info_elements = item.find_elements(By.CSS_SELECTOR, "div.relationships---founders.w-richtext p")
             founders_info = ", ".join([founder.text for founder in founders_info_elements if founder.text])
