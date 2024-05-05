@@ -49,7 +49,7 @@ def scrape_site(start_url, keywords):
         visited.add(normalized_url)
 
         driver.get(current_url)
-        driver.implicitly_wait(10) 
+        driver.implicitly_wait(15) 
 
         soup = BeautifulSoup(driver.page_source, 'html.parser')
         content = soup.get_text(separator=' ', strip=True)
@@ -71,22 +71,21 @@ def scrape_site(start_url, keywords):
         file.write(all_content)
 
 keywords = [
-    'connect', 'contact-us', 'get-in-touch', 'contact', 'global-presence',
-    'about', 'about-us', 'who-we-are', 'our-story', 'company-info',
-    'relationships', 'portfolio'
+    'firm/', 'portfolio/', 'connect', 'connect/', 'contact-us', 'contact-us/', 'get-in-touch', 'get-in-touch/' , 'contact',
+    'contact/', 'global-presence/',
+    'about', "about/", 'about-us', 'who-we-are', 'our-story', 'company-info',
+    'relationships', 'portfolio', 'our-companies/', 'contact-us/', 'companies/', 'about/', 'partnerships/',
+    'companies/'
 ]
 
-
-# scrape_site('https://www.accel.com', keywords)
-
-scrape_site('https://www.a16z.com', keywords)
 
 vc_websites = [
-    'https://www.accel.com', 'https://www.a16z.com', 'https://www.greylock.com',
-    'https://www.benchmark.com', 'https://www.sequoiacap.com', 'https://www.indexventures.com',
-    'https://www.kpcb.com', 'https://www.lsvp.com', 'https://www.matrixpartners.com',
-    'https://www.500.co', 'https://www.sparkcapital.com', 'https://www.insightpartners.com'
+    'https://www.accel.com/', 'https://www.a16z.com/', 'https://www.greylock.com/',
+    'https://www.benchmark.com/', 'https://www.sequoiacap.com/', 'https://www.indexventures.com/',
+    'https://www.kpcb.com/', 'https://www.lsvp.com/', 'https://matrix.vc/',
+    'https://www.500.co/', 'https://www.sparkcapital.com/', 'https://www.insightpartners.com/'
 ]
 
 
-
+for website in vc_websites:
+    scrape_site(website, keywords)
