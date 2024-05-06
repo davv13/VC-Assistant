@@ -55,7 +55,7 @@ def scrape_site(start_url, keywords):
         content = soup.get_text(separator=' ', strip=True)
         title = driver.title if driver.title else 'No Title'
 
-        all_content += f"## {title}\n\n{content}\n\n---\n\n"
+        all_content += f"## {title}\n\n{content}\n\n\n\n"
 
         for link in soup.find_all('a', href=True):
             abs_link = urljoin(current_url, link['href'])
