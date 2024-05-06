@@ -1,13 +1,16 @@
 import os
 import openai
 import json
+import streamlit as st
 
 def load_api_key(file_path):
     with open(file_path, 'r') as file:
         return file.readline().strip()
 
-api_key_path = 'openai_api_key.txt'
-openai.api_key = load_api_key(api_key_path)
+api_key = st.secrets["OPENAI_API_KEY"] if 'OPENAI_API_KEY' in st.secrets else os.getenv('OPENAI_API_KEY')
+if not api_key:
+    st.error("API key not found. Please set it as an environment variable or in secrets.toml.")
+    st.stop()
 
 def extract_vc_details(input_text):
     response = openai.chat.completions.create(
