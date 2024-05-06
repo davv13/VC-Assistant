@@ -22,10 +22,9 @@ def ends_with_keywords(url, keywords):
     return any(path.endswith('/' + keyword.lower()) for keyword in keywords)
 
 def setup_driver():
-    service = Service(ChromeDriverManager().install())
     options = webdriver.ChromeOptions()
-    options.add_argument('--headless')
-    return webdriver.Chrome(service=service, options=options)
+    options.add_argument("--headless")
+    return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
 def normalize_url(url):
     parsed = urlparse(url)

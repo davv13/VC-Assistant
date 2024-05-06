@@ -9,7 +9,6 @@ from langchain_community.vectorstores import Chroma as ChromaDB
 from langchain.indexes.vectorstore import VectorStoreIndexWrapper
 from scrape_any_url import scrape_site, keywords
 from extract_VC_info import extract_vc_details
-from langchain.vectorstores.chroma import Chroma
 
 
 openai_api_key = st.secrets["OPENAI_API_KEY"] if 'OPENAI_API_KEY' in st.secrets else os.getenv('OPENAI_API_KEY')
